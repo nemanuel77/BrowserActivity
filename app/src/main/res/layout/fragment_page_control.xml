@@ -2,15 +2,40 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frame_PCF"
+    android:id="@+id/frame_PVF"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PageControlFragment">
 
-    <TextView
-        android:id="@+id/txtView_PCF"
+    <ImageButton
+        android:id="@+id/imgBtn_Next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/PCF_Init" />
+        android:layout_gravity="center|right|center_horizontal"
+        android:src="@android:drawable/ic_media_next" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_Load"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal"
+        android:src="@android:drawable/ic_media_play" />
+
+    <ImageButton
+        android:id="@+id/imgBtn_Back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal|left"
+        android:src="@android:drawable/ic_media_previous" />
+
+    <EditText
+        android:id="@+id/txtURL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|top"
+        android:autofillHints="@string/URL_Enter"
+        android:ems="10"
+        android:inputType="textUri"
+        tools:text="@string/URL_Enter" />
+
 </FrameLayout>

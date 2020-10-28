@@ -3,14 +3,13 @@ package temple.edu;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
-import android.content.res.Resources;
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity {
+public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress {
 
     //define resources
     //Resources res = getResources();
-    PageControlFragment PCF = new PageControlFragment();
+    //PageControlFragment PCF = new PageControlFragment();
     PageViewerElement PVE = new PageViewerElement();
 
 
@@ -25,14 +24,16 @@ public class BrowserActivity extends AppCompatActivity {
 
         fm
                 .beginTransaction()
-                .add(R.id.page_control, PCF)
+                .add(R.id.page_control, PageControlFragment.newInstance())
                 .add(R.id.page_viewer, PVE)
+                .addToBackStack(null)
                 .commit();
 
 
+    }
 
-
-
-
+    @Override
+    public void sendURL(String string) {
+        PVE.getURLFromParent(string);
     }
 }

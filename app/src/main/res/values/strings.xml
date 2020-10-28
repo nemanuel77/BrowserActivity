@@ -4,6 +4,7 @@
 <!--    <string name="hello_blank_fragment">Hello blank fragment</string>-->
     <string name="PCF_Init">Page Control Fragment Load Text</string>
     <string name="PVF_Init">Page Viewer Fragment Load Text</string>
+    <string name="URL_Enter">Enter A URL...</string>
 
 
 </resources>
