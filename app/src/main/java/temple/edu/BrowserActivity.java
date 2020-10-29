@@ -51,6 +51,16 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     }
 
     @Override
+    public void goBack() {
+        PVE.goBack();
+    }
+
+    @Override
+    public void goForward() {
+        PVE.goForward();
+    }
+
+    @Override
     public void sendURLToTxt(String string) {
         PCF.getNewURL(string);
     }

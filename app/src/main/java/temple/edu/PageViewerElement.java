@@ -100,18 +100,32 @@ public class PageViewerElement extends Fragment {
         return myView;
     }
 
-
-
-
-
-
     public void getURLFromParent(String string) {
         webView.loadUrl(string);
 
     }
 
+    public void goBack(){
+        if (webView.canGoBack()){
+            webView.goBack();
+        }
+        else{
+            Toast.makeText(getActivity(), "There is no webpage to go back to.", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void goForward(){
+        if(webView.canGoForward()){
+            webView.goForward();
+        }
+        else{
+            Toast.makeText(getActivity(), "There is no webpage to go forward to.", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public interface sendURLToFragment{
          void sendURLToTxt(String string);
     }
+
 
 }

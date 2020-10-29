@@ -15,6 +15,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.util.List;
+
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link PageControlFragment#newInstance} factory method to
@@ -26,6 +29,8 @@ public class PageControlFragment extends Fragment {
     private ImageButton btnLoad;
     private ImageButton btnNext;
     private ImageButton btnBack;
+
+    //List<String> history;
 
     getURLAddress parentActivity;
 
@@ -44,14 +49,7 @@ public class PageControlFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PageControlFragment.
-     */
+
     // TODO: Rename and change types and number of parameters
     public static PageControlFragment newInstance() {
         PageControlFragment fragment = new PageControlFragment();
@@ -104,15 +102,37 @@ public class PageControlFragment extends Fragment {
                 if (theURL.contains("http://") || theURL.contains("https://")){
                     Toast.makeText(getActivity(), theURL, Toast.LENGTH_LONG).show();
                     parentActivity.sendURL(theURL);
+                    //history.add(theURL);
                 }
                 else {
                     theURL = "http://"+theURL;
                     Toast.makeText(getActivity(), theURL, Toast.LENGTH_LONG).show();
                     parentActivity.sendURL(theURL);
+                    //history.add(theURL);
                 }
 
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                //String theURL = urlInput.getText().toString();
+                parentActivity.goBack();
+
+            }
+        });
+
+        btnNext.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                //String theURL = urlInput.getText().toString();
+                parentActivity.goForward();
+            }
+        });
+
+
 
         return myView;
     }
@@ -124,6 +144,8 @@ public class PageControlFragment extends Fragment {
 
     public interface getURLAddress{
          void sendURL(String string);
+         void goBack();
+         void goForward();
     }
 
 }
