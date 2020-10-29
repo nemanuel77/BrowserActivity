@@ -33,6 +33,7 @@ public class PageViewerElement extends Fragment {
     TextView textView;
     View myView;
     WebView webView;
+    String theUrl;
 
     sendURLToFragment parentActivity;
 
@@ -62,6 +63,12 @@ public class PageViewerElement extends Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("URL", theUrl);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         if (context instanceof sendURLToFragment)
@@ -76,16 +83,23 @@ public class PageViewerElement extends Fragment {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_page_viewer_element, container, false);
         webView = myView.findViewById(R.id.web_PVF);
+
+        if(savedInstanceState != null){
+            theUrl = savedInstanceState.getString("URL");
+            webView.loadUrl(theUrl);
+        }
+
         webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
 
-                String theUrl = request.getUrl().toString();
+                theUrl = request.getUrl().toString();
                 Toast.makeText(getActivity(), theUrl, Toast.LENGTH_LONG).show();
                 parentActivity.sendURLToTxt(theUrl);
                 return super.shouldOverrideUrlLoading(view, request);
             }
         });
+
 
 //        webView.setOnClickListener(new View.OnClickListener() {
 //            @Override
