@@ -1,5 +1,6 @@
 package temple.edu;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,9 +11,11 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.io.BufferedReader;
@@ -31,14 +34,11 @@ public class PageViewerElement extends Fragment {
     View myView;
     WebView webView;
 
-    Handler responseHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(@NonNull Message msg){
+    sendURLToFragment parentActivity;
 
-            webView.loadUrl(msg.toString());
-            return false;
-        }
-    });
+    private Bundle saveState = null;
+
+
 
 
 
@@ -46,16 +46,9 @@ public class PageViewerElement extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment PageViewerElement.
-     */
+
     // TODO: Rename and change types and number of parameters
-    public static PageViewerElement newInstance(String param1, String param2) {
+    public static PageViewerElement newInstance() {
         PageViewerElement fragment = new PageViewerElement();
 
         return fragment;
@@ -69,20 +62,56 @@ public class PageViewerElement extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof sendURLToFragment)
+            parentActivity = (sendURLToFragment) context;
+        else
+            throw new RuntimeException("Activity doesn't implement sendURLToFragment");
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         myView = inflater.inflate(R.layout.fragment_page_viewer_element, container, false);
         webView = myView.findViewById(R.id.web_PVF);
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+
+                String theUrl = request.getUrl().toString();
+                Toast.makeText(getActivity(), theUrl, Toast.LENGTH_LONG).show();
+                parentActivity.sendURLToTxt(theUrl);
+                return super.shouldOverrideUrlLoading(view, request);
+            }
+        });
+
+//        webView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String theurl = webView.getUrl();
+//                Toast.makeText(getActivity(), theurl, Toast.LENGTH_LONG).show();
+//                parentActivity.sendURLToTxt(theurl);
+//            }
+//        });
 
 
         return myView;
     }
 
+
+
+
+
+
     public void getURLFromParent(String string) {
         webView.loadUrl(string);
 
+    }
+
+    public interface sendURLToFragment{
+         void sendURLToTxt(String string);
     }
 
 }

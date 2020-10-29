@@ -7,35 +7,62 @@
     android:layout_height="match_parent"
     tools:context=".PageControlFragment">
 
-    <ImageButton
-        android:id="@+id/imgBtn_Next"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|right|center_horizontal"
-        android:src="@android:drawable/ic_media_next" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_PCF"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|center_horizontal">
 
-    <ImageButton
-        android:id="@+id/imgBtn_Load"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center_horizontal"
-        android:src="@android:drawable/ic_media_play" />
+        <EditText
+            android:id="@+id/txtURL"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.015" />
 
-    <ImageButton
-        android:id="@+id/imgBtn_Back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center_horizontal|left"
-        android:src="@android:drawable/ic_media_previous" />
+        <ImageButton
+            android:id="@+id/imgBtn_Load"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal"
+            android:layout_marginStart="104dp"
+            android:layout_marginTop="12dp"
+            android:src="@android:drawable/ic_media_play"
+            app:layout_constraintStart_toEndOf="@+id/imgBtn_Back"
+            app:layout_constraintTop_toBottomOf="@+id/txtURL" />
 
-    <EditText
-        android:id="@+id/txtURL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|top"
-        android:autofillHints="@string/URL_Enter"
-        android:ems="10"
-        android:inputType="textUri"
-        tools:text="@string/URL_Enter" />
+        <ImageButton
+            android:id="@+id/imgBtn_Back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|center_horizontal|left"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:src="@android:drawable/ic_media_previous"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtURL" />
+
+        <ImageButton
+            android:id="@+id/imgBtn_Next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|right|center_horizontal"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:src="@android:drawable/ic_media_next"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txtURL" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

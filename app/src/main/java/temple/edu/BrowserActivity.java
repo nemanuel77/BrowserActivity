@@ -5,35 +5,53 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress {
+public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress, PageViewerElement.sendURLToFragment {
 
     //define resources
     //Resources res = getResources();
-    //PageControlFragment PCF = new PageControlFragment();
+    PageControlFragment PCF = new PageControlFragment();
     PageViewerElement PVE = new PageViewerElement();
+    int pcfID = 0;
+    int pveID = 1;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         //initialize fragments
 
-        FragmentManager fm = getSupportFragmentManager();
+        if (savedInstanceState == null) {
+            PCF = PageControlFragment.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.page_control, PCF)
+                    .commit();
 
-        fm
-                .beginTransaction()
-                .add(R.id.page_control, PageControlFragment.newInstance())
-                .add(R.id.page_viewer, PVE)
-                .addToBackStack(null)
-                .commit();
+            PVE = PageViewerElement.newInstance();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.page_viewer, PVE)
+                    .commit();
 
 
+        } else {
+
+            PVE = (PageViewerElement) getSupportFragmentManager()
+                    .findFragmentById(R.id.page_viewer);
+
+
+        }
     }
 
     @Override
     public void sendURL(String string) {
         PVE.getURLFromParent(string);
+    }
+
+    @Override
+    public void sendURLToTxt(String string) {
+        PCF.getNewURL(string);
     }
 }

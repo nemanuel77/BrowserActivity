@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -100,12 +101,25 @@ public class PageControlFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String theURL = urlInput.getText().toString();
-                parentActivity.sendURL(theURL);
+                if (theURL.contains("http://") || theURL.contains("https://")){
+                    Toast.makeText(getActivity(), theURL, Toast.LENGTH_LONG).show();
+                    parentActivity.sendURL(theURL);
+                }
+                else {
+                    theURL = "http://"+theURL;
+                    Toast.makeText(getActivity(), theURL, Toast.LENGTH_LONG).show();
+                    parentActivity.sendURL(theURL);
+                }
 
             }
         });
 
         return myView;
+    }
+
+    public void getNewURL(String string){
+        urlInput.setText(string);
+
     }
 
     public interface getURLAddress{
