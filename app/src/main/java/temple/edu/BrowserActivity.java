@@ -1,6 +1,7 @@
 package temple.edu;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
@@ -11,8 +12,9 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     //Resources res = getResources();
     PageControlFragment PCF = new PageControlFragment();
     PageViewerElement PVE = new PageViewerElement();
-    int pcfID = 0;
-    int pveID = 1;
+    FragmentManager fm;
+
+
 
 
 
@@ -22,27 +24,28 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
         setContentView(R.layout.activity_main);
         //initialize fragments
 
-        if (savedInstanceState == null) {
-            PCF = PageControlFragment.newInstance();
-            getSupportFragmentManager()
-                    .beginTransaction()
+        fm = getSupportFragmentManager();
+        Fragment tempFragment;
+
+        if ((tempFragment = fm.findFragmentById(R.id.page_control)) instanceof  PageControlFragment)
+            PCF = (PageControlFragment) tempFragment;
+        else{
+            PCF = new PageControlFragment();
+            fm.beginTransaction()
                     .add(R.id.page_control, PCF)
                     .commit();
+        }
 
-            PVE = PageViewerElement.newInstance();
-            getSupportFragmentManager()
-                    .beginTransaction()
+        if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerElement)
+            PVE = (PageViewerElement) tempFragment;
+        else{
+            PVE = new PageViewerElement();
+            fm.beginTransaction()
                     .add(R.id.page_viewer, PVE)
                     .commit();
-
-
-        } else {
-
-            PVE = (PageViewerElement) getSupportFragmentManager()
-                    .findFragmentById(R.id.page_viewer);
-
-
         }
+
+
     }
 
     @Override

@@ -64,8 +64,8 @@ public class PageViewerElement extends Fragment {
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putString("URL", theUrl);
-        super.onSaveInstanceState(outState);
+       super.onSaveInstanceState(outState);
+       webView.saveState(outState);
     }
 
     @Override
@@ -84,10 +84,6 @@ public class PageViewerElement extends Fragment {
         myView = inflater.inflate(R.layout.fragment_page_viewer_element, container, false);
         webView = myView.findViewById(R.id.web_PVF);
 
-        if(savedInstanceState != null){
-            theUrl = savedInstanceState.getString("URL");
-            webView.loadUrl(theUrl);
-        }
 
         webView.setWebViewClient(new WebViewClient(){
             @Override
@@ -100,16 +96,9 @@ public class PageViewerElement extends Fragment {
             }
         });
 
-
-//        webView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String theurl = webView.getUrl();
-//                Toast.makeText(getActivity(), theurl, Toast.LENGTH_LONG).show();
-//                parentActivity.sendURLToTxt(theurl);
-//            }
-//        });
-
+        if(savedInstanceState != null){
+            webView.restoreState(savedInstanceState);
+        }
 
         return myView;
     }

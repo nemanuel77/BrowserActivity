@@ -95,6 +95,11 @@ public class PageControlFragment extends Fragment {
         btnNext =  myView.findViewById(R.id.imgBtn_Next);
         btnBack =  myView.findViewById(R.id.imgBtn_Back);
 
+        if(savedInstanceState != null){
+            String setText = savedInstanceState.getString("URL");
+            urlInput.setText(setText);
+        }
+
         btnLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +145,12 @@ public class PageControlFragment extends Fragment {
     public void getNewURL(String string){
         urlInput.setText(string);
 
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("theURL", urlInput.getText().toString());
+        super.onSaveInstanceState(outState);
     }
 
     public interface getURLAddress{
