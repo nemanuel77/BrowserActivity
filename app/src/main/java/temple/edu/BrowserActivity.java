@@ -6,13 +6,22 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress, PageViewerElement.sendURLToFragment {
+public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress, PageViewerFragment.sendURLToFragment {
 
     //define resources
     //Resources res = getResources();
+
+    //define fragments to be used in application
     PageControlFragment PCF = new PageControlFragment();
-    PageViewerElement PVE = new PageViewerElement();
+    PageViewerFragment PVE = new PageViewerFragment();
+    BrowserControlFragment BCF = new BrowserControlFragment();
+    PageListFragment PLF = new PageListFragment();
+
+    //fragment managing object
     FragmentManager fm;
+
+    //boolean to check phone orientation(landscape/mobile)
+    Boolean isLandscape;
 
 
 
@@ -22,8 +31,11 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //initialize fragments
 
+        //check for a container that is only drawn in landscape orientation.
+        isLandscape = findViewById(R.id.page_list) != null;
+
+        //initialize fragment manager
         fm = getSupportFragmentManager();
         Fragment tempFragment;
 
@@ -36,15 +48,39 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
                     .commit();
         }
 
-        if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerElement)
-            PVE = (PageViewerElement) tempFragment;
+        if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerFragment)
+            PVE = (PageViewerFragment) tempFragment;
         else{
-            PVE = new PageViewerElement();
+            PVE = new PageViewerFragment();
             fm.beginTransaction()
                     .add(R.id.page_viewer, PVE)
                     .commit();
         }
 
+        if((tempFragment = fm.findFragmentById(R.id.browser_control)) instanceof BrowserControlFragment)
+            BCF = (BrowserControlFragment) tempFragment;
+        else{
+            BCF = new BrowserControlFragment();
+            fm.beginTransaction()
+                    .add(R.id.browser_control,BCF)
+                    .commit();
+        }
+
+
+        //add another container and attach fragment to container if orientation is set to landscape.
+        //1:09PM 10-31: Blank Fragments created, page_list attaches properly.
+        //TODO: create a list in page_list, build fragments(all new fragments are currently blank)
+        if(isLandscape)
+
+            if((tempFragment = fm.findFragmentById(R.id.page_list)) instanceof  PageListFragment)
+                PLF = (PageListFragment) tempFragment;
+            else{
+
+                fm.beginTransaction()
+                        .add(R.id.page_list,PLF)
+                        .commit();
+
+            }
 
     }
 

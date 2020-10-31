@@ -6,8 +6,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,17 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
-
-
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PageViewerElement#newInstance} factory method to
+ * Use the {@link PageViewerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PageViewerElement extends Fragment {
+public class PageViewerFragment extends Fragment {
 
     TextView textView;
     View myView;
@@ -43,14 +36,14 @@ public class PageViewerElement extends Fragment {
 
 
 
-    public PageViewerElement() {
+    public PageViewerFragment() {
         // Required empty public constructor
     }
 
 
     // TODO: Rename and change types and number of parameters
-    public static PageViewerElement newInstance() {
-        PageViewerElement fragment = new PageViewerElement();
+    public static PageViewerFragment newInstance() {
+        PageViewerFragment fragment = new PageViewerFragment();
 
         return fragment;
     }
