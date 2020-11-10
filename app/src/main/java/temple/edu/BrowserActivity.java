@@ -6,7 +6,13 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-public class BrowserActivity extends AppCompatActivity implements PageControlFragment.getURLAddress, PageViewerFragment.sendURLToFragment {
+import java.util.ArrayList;
+import java.util.List;
+
+public class BrowserActivity extends AppCompatActivity implements
+        PageControlFragment.getURLAddress,
+        PageViewerFragment.sendURLToFragment,
+        BrowserControlFragment.createNewPVF {
 
     //define resources
     //Resources res = getResources();
@@ -16,6 +22,12 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     PageViewerFragment PVE = new PageViewerFragment();
     BrowserControlFragment BCF = new BrowserControlFragment();
     PageListFragment PLF = new PageListFragment();
+
+    SwipeAdapter swipeAdapter;
+    PagerFragment pagerFragment = new PagerFragment();
+    List<Fragment> pagerList;
+
+    Fragment tempFragment;
 
     //fragment managing object
     FragmentManager fm;
@@ -32,12 +44,14 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        pagerList = new ArrayList<>();
+
         //check for a container that is only drawn in landscape orientation.
         isLandscape = findViewById(R.id.page_list) != null;
 
         //initialize fragment manager
         fm = getSupportFragmentManager();
-        Fragment tempFragment;
+        /*Fragment tempFragment;*/
 
         if ((tempFragment = fm.findFragmentById(R.id.page_control)) instanceof  PageControlFragment)
             PCF = (PageControlFragment) tempFragment;
@@ -48,14 +62,23 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
                     .commit();
         }
 
-        if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerFragment)
+        if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PagerFragment)
+            pagerFragment = (PagerFragment) tempFragment;
+        else{
+            pagerFragment = new PagerFragment();
+            fm.beginTransaction()
+                .add(R.id.page_viewer, pagerFragment)
+                    .commit();
+        }
+
+       /* if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerFragment)
             PVE = (PageViewerFragment) tempFragment;
         else{
             PVE = new PageViewerFragment();
             fm.beginTransaction()
                     .add(R.id.page_viewer, PVE)
                     .commit();
-        }
+        }*/
 
         if((tempFragment = fm.findFragmentById(R.id.browser_control)) instanceof BrowserControlFragment)
             BCF = (BrowserControlFragment) tempFragment;
@@ -103,4 +126,21 @@ public class BrowserActivity extends AppCompatActivity implements PageControlFra
     public void sendURLToTxt(String string) {
         PCF.getNewURL(string);
     }
+
+    @Override
+    public void newPVFPage() {
+        PVE = new PageViewerFragment();
+        fm.beginTransaction()
+                .replace(R.id.page_viewer, PVE)
+                .commit();
+
+       /* if ((tempFragment = fm.findFragmentById(R.id.page_viewer)) instanceof PageViewerFragment)
+            PVE = (PageViewerFragment) tempFragment;
+        else{
+            PVE = new PageViewerFragment();
+            fm.beginTransaction()
+                    .add(R.id.page_viewer, PVE)
+                    .commit();*/
+        }
+
 }
